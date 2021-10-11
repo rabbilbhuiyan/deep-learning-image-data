@@ -17,10 +17,8 @@
 # # <font color= #28b463 > Project of Analytics Service Development </font>
 
 # ### <font color=blue>Project Title:</font> <font color=orange>The effect of data augmentation in classifying weapons using Convolutional Neural Network </font>
-#
 # ##### Presented by:<font color=maroon>Rabbil Bhuiyan</font>
-#
-# Presented on 29.05.2020
+# ##### Presented on 29.05.2020
 
 Image(filename= "gun_rifle_other_image.jpg", width=300, height=200)
 
