@@ -14,15 +14,15 @@
 #     name: python3
 # ---
 
-# # <font color= #28b463 > Project of Analytics Service Development </font>
+# # Project of Analytics Service Development Course
 
-# ### <font color=blue>Project Title:</font> <font color=orange>The effect of data augmentation in classifying weapons using Convolutional Neural Network </font>
-# ##### Presented by:<font color=maroon>Rabbil Bhuiyan</font>
+# ### Project Title: The effect of data augmentation in classifying weapons using Convolutional Neural Network
+# ##### Presented by: Rabbil Bhuiyan
 # ##### Presented on 29.05.2020
 
 Image(filename= "gun_rifle_other_image.jpg", width=300, height=200)
 
-# ## <font color=blue>Introduction</font>
+# ## Introduction
 
 # There is an increasing demand for automated surveillance services for numerous security reasons. The main aim of automated surveillance is to alert the CCTV (Closed Circuit Television) operator when there happens a dangerous situation (by providing certain mesaures like proximity alarm, lighting, intruder detection systems). Such dangerous situation of carrying a weapon like handgun, rifle ot other with the intention of harming people in the public place, can be identified using machine learning classification algorithms in the field of computer vision. Thus, the classification of weapons is important for the CCTV operational requirements for a wider security and safety aspects. This project proposed machine learning algorithms using artificial neural network for classification of weapons  either handgun, rifle or other. The objectives of this project to be achieved are- 
 #
@@ -31,7 +31,7 @@ Image(filename= "gun_rifle_other_image.jpg", width=300, height=200)
 #
 # To do this, the project will utilize an artificial neural network based classifier (for details see the method section).
 
-# #### <font color=orange>Importing packages</font>
+# #### Importing packages
 
 # +
 # Import necessary libraies
@@ -59,7 +59,7 @@ import matplotlib.pyplot as plt
 # %matplotlib inline
 # -
 
-# #### <font color= #a569bd >Reading data into the memory </font>
+# #### Reading data into the memory
 
 # +
 import os
@@ -72,7 +72,7 @@ print('Total images of rifle: ', len(rifle_files))
 print('Total images of other: ', len(other_files))
 # -
 
-# #### <font color= #a569bd >Organization of data </font>
+# #### Organization of data 
 
 # +
 TRAIN_DATADIR= "C:/Users/Rabbil/Documents/New_folder_weapons_dataset/train_data"
@@ -204,7 +204,7 @@ random.shuffle(training_data)
 for sample in training_data[:10]:
     print(sample[1])
 
-# #### <font color= #a569bd >Assigining features and label variables for training dataset </font>
+# #### Assigining features and label variables for training dataset 
 
 # assigning features and label variables
 X= [] #in general, capital X is feature set
@@ -241,7 +241,7 @@ print(y)
 print(y.shape)
 # So we see 26542 observations, 3 labels as 'one hot'
 
-# #### <font color= #a569bd >Splitting the training dataset into train and validation set </font>
+# #### Splitting the training dataset into train and validation set
 
 from sklearn.model_selection import train_test_split
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size = 0.2, random_state = 2)
@@ -286,7 +286,7 @@ train_generator = train_datagen.flow(X_train, y_train, batch_size=batch_size)
 val_generator = val_datagen.flow(X_val, y_val, batch_size= batch_size)
 # -
 
-# ### <font color= blue >Methods (Convolutional Neural Network)</font>
+# ### Methods (Convolutional Neural Network)
 
 # Classification of image as handgun, rifle or other can be done with the help of artificial neural networks trained through supervised or unsupervised learning algorithms. In this project, back-propagation algorithm which is a supervised learning algorithm is chosen for its simplicity. Frist, we build a simple neural network with only two hidden layers. This was used as baseline model.
 #
@@ -304,7 +304,7 @@ val_generator = val_datagen.flow(X_val, y_val, batch_size= batch_size)
 # Now we need to compile the model. Here we will be using Adam optimiser to reach to the global minima while training out model. We will also specify the learning rate of the optimiser, here in this case it is set at 0.0001. Now the final model is ready. We are using model.fit_generator as we are using ImageDataGenerator to pass data to the model. We will pass train and validation data to fit_generator. 
 #
 
-# #### <font color= #a569bd >Building the baseline model </font>
+# #### Building the baseline model
 
 # +
 # Conv2D : two dimensional convolutional model
@@ -320,14 +320,14 @@ model = Sequential([
 
 model.summary()
 
-# #### <font color= #a569bd >Compile the model </font>
+# #### Compile the model
 
 # compiling the model
 model.compile(optimizer=Adam(lr=0.0001), 
               loss='categorical_crossentropy', 
               metrics=['accuracy'])
 
-# #### <font color= #a569bd >Train the simple CNN model</font>
+# #### Train the simple CNN model
 
 # +
 #Use the fit_generator method of the ImageDataGenerator class to train the network
@@ -348,7 +348,7 @@ print("Final loss: {0:.4f}, final accuracy: {1:.4f}".format(
 
 model.save('BaselineCnnModel.h5')
 
-# #### <font color= #a569bd >Vizualizing training and validation accuracy and loss </font>
+# #### Vizualizing training and validation accuracy and loss
 
 # +
 #get the details from the history object
@@ -381,7 +381,7 @@ plt.show()
 # -  It means that the model will have a difficult time generalizing on a new dataset due to overfitting.
 # -  One way to overcome overfitting is data augmentation.
 
-# #### <font color= #a569bd >Fine-tunning of the model </font>
+# #### Fine-tunning of the model
 
 # +
 model_tuned=Sequential()
@@ -470,7 +470,7 @@ plt.show()
 # - It gives us the intuition that increasing the epoch size will likely give us a higher accuracy.
 # - The loss curves are still overfitting as both train and validation loss are not close to each other as accuracy curve, but the loss will likely go lower if we increase the epoch size.
 
-# #### <font color= #a569bd >Testing the model </font>
+# #### Testing the model
 
 # +
 # shuffling of data
@@ -601,7 +601,7 @@ plot_confusion_matrix(cm=cm, CATEGORIES=cm_plot_labels, title='Confusion Matrix'
 # -  Poor predictions could be due to multi level classfication
 # -  The 'other' image is problematic during runing the predction model which indicates faulty images
 
-# ### <font color= blue >Augmentation technique of images</font>
+# ### Augmentation technique of images
 
 # Image data augmentation is a technique that can be used to artificially expand the size of a training dataset by creating modified versions of images in the dataset. Training deep learning neural network models on more data can result in more powerful models, and the augmentation techniques can create variations of the images that can improve the ability of the fit models to generalize. Thus image augmentation techniques also reduce the overfitting of the model. The Keras deep learning library provides the ability to use data augmentation automatically when training a model. This is achieved by using the ImageDataGenerator class.
 #
@@ -656,9 +656,9 @@ train_generator_fm = train_datagen_fm.flow(X_train, y_train, batch_size=batch_si
 val_generator = val_datagen.flow(X_val, y_val, batch_size= batch_size)
 # -
 
-# #### <font color= #a569bd >Training the model for each augmentation parameter </font>
+# #### Training the model for each augmentation parameter 
 
-# ##### <font color= #5dade2 >Rotation range </font>
+# ##### Rotation range
 
 # +
 # Now train the model using model.fit_generator()in the tunned model
@@ -674,7 +674,7 @@ print("Final loss: {0:.4f}, final accuracy: {1:.4f}".format(
     history_tuned_rr.history['val_accuracy'][-1]))
 # -
 
-# ##### <font color= #5dade2 >Shear range </font>
+# ##### Shear range
 
 # +
 history_tuned_sr = model_tuned.fit_generator(train_generator_sr, 
@@ -689,7 +689,7 @@ print("Final loss: {0:.4f}, final accuracy: {1:.4f}".format(
     history_tuned_sr.history['val_accuracy'][-1]))
 # -
 
-# ##### <font color= #5dade2 >Zoom range </font>
+# ##### Zoom range 
 
 # +
 history_tuned_zr = model_tuned.fit_generator(train_generator_zr, 
@@ -704,7 +704,7 @@ print("Final loss: {0:.4f}, final accuracy: {1:.4f}".format(
     history_tuned_zr.history['val_accuracy'][-1]))
 # -
 
-# ##### <font color= #5dade2 >Width_shift_range </font>
+# ##### Width_shift_range 
 
 # +
 history_tuned_wsr = model_tuned.fit_generator(train_generator_wsr, 
@@ -719,7 +719,7 @@ print("Final loss: {0:.4f}, final accuracy: {1:.4f}".format(
     history_tuned_wsr.history['val_accuracy'][-1]))
 # -
 
-# ##### <font color= #5dade2 >Height_shift_range </font>
+# ##### Height_shift_range
 
 # +
 history_tuned_hsr = model_tuned.fit_generator(train_generator_hsr, 
@@ -734,7 +734,7 @@ print("Final loss: {0:.4f}, final accuracy: {1:.4f}".format(
     history_tuned_hsr.history['val_accuracy'][-1]))
 # -
 
-# ##### <font color= #5dade2 >Channel_shift_range </font>
+# ##### Channel_shift_range
 
 # +
 history_tuned_csr = model_tuned.fit_generator(train_generator_csr, 
@@ -749,7 +749,7 @@ print("Final loss: {0:.4f}, final accuracy: {1:.4f}".format(
     history_tuned_csr.history['val_accuracy'][-1]))
 # -
 
-# ##### <font color= #5dade2 >Horizontal_flip </font>
+# ##### Horizontal_flip 
 
 # +
 history_tuned_hf = model_tuned.fit_generator(train_generator_hf, 
@@ -764,7 +764,7 @@ print("Final loss: {0:.4f}, final accuracy: {1:.4f}".format(
     history_tuned_hf.history['val_accuracy'][-1]))
 # -
 
-# ##### <font color= #5dade2 >Vertical_flip </font>
+# ##### Vertical_flip 
 
 # +
 history_tuned_vf = model_tuned.fit_generator(train_generator_vf, 
@@ -779,7 +779,7 @@ print("Final loss: {0:.4f}, final accuracy: {1:.4f}".format(
     history_tuned_vf.history['val_accuracy'][-1]))
 # -
 
-# ##### <font color= #5dade2 >Fill_mode </font>
+# ##### Fill_mode
 
 # +
 history_tuned_fm = model_tuned.fit_generator(train_generator_fm, 
@@ -793,10 +793,7 @@ print("Final loss: {0:.4f}, final accuracy: {1:.4f}".format(
     history_tuned_fm.history['val_loss'][-1], 
     history_tuned_fm.history['val_accuracy'][-1]))
 # -
-
-
-
-# #### <font color= #a569bd >Plotting the accuracy and loss </font>
+# #### Plotting the accuracy and loss
 
 # +
 figure = plt.figure(figsize=(20,9))
@@ -846,7 +843,7 @@ plt.legend(loc='lower right')
 plt.show()
 # -
 
-# #### <font color= #a569bd > Table for comparasion of all the accuracy and loss</font>
+# #### Table for comparasion of all the accuracy and loss
 
 # +
 # Assigning variables to each model's accuracy and loss
@@ -923,35 +920,35 @@ df
 # val_loss starts increasing, val_acc starts decreasing(means model is cramming values not learning)
 # -
 
-# ### <font color= blue> Conclusions </font>
+# ### Conclusions
 
 # After tuning, by adding more layers, we have improved the baseline model which was based on just two layers. We still observed that both training and validation accuracy is not fairly good for value proposition of weapon dataset. This poor accuracy is might be due to the multi-class weapon classification, which we found dispropotionate number of images in ‘other’ image class. However, few images in 'other' class also seems to be out of the boundary in case of resized images. We assume that the accuracy will fairly increase while considering binary classification between handgun and rifle. However, further tuning or tailoring of the CNN modelling parameter might improve the multi-class weapon classification in terms of both accuracy and loss. As we observed the with the increases of epochs the accuracy improves, applying large number of epoch could improve the model.
 #
 # The augmentation techniques we applied gave us promising results. We observed that 'fill_mode' parameter improved the model by minimizing the loss and maximizing the accuracy significantly. However, Height_shift_range parameter looks promimsing in improving the model accuracy as the deviations among the accuracy levels are least. So, combination of augmentation parameters might improve the model accuracy further.
 #
 
-# ### <font color= #52be80> Business Value propositions </font>
+# ### Business Value propositions
 
-# #### <font color=  #f39c12> Data-sourced propostions</font>
+# ####  Data-sourced propostions
 # - Binary classfication vs multi-class classfication 
 # - Very small pixel image particularly in 'other' image data
 # - Dispropotionate images across the classes (Handguns : 9104; Rifles : 14244; Other : 3194)
 #
-# #### <font color=  #f39c12> Analytics-driven propostions</font>
+# ####  Analytics-driven propostions
 # - Tailoring image size (resizing of image)
 #   - Image size vs Total params in CNN model
 # - Further tuning of CNN model
 # - Increasing the number of epochs
 # - Combinations of augmentation parameters
 #
-# #### <font color=  #f39c12> Take-way propositions based on this project study</font>
+# ####  Take-way propositions based on this project study
 # - Best models minimize loss and maximize accuracy
 # - Augmentation of images affect the model accuracy (not all parameter !)
 # - Horizontal flip is most effective (as both loss and val_loss are lower and accuracy and val_accuracy are higher)
 # - Fill mode parameter : highest accuracy (0.86) and lowest loss (0.3)
 # - Fill mode alone improved the model accuracy from 0.66 to 0.86 (<font color=orange>Awesome !</font>)
 
-# ## <font color= #ec7063 >THANK YOU !</font>
+# ## THANK YOU !
 
 Image(filename= "question_image.jpg", width=900, height=400)
 
